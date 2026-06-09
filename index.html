@@ -47,7 +47,7 @@
     
     <section class="flex-[2] overflow-y-auto p-6 space-y-6 border-r border-slate-800">
       
-      <div class="bg-gradient-to-br from-slate-900 to-indigo-950/40 border border-slate-800 rounded-xl p-6 shadow-xl relative overflow-hidden">
+      <div class="bg-gradient-to-br from-slate-900 to-indigo-950/40 border border-slate-800 rounded-xl p-6 shadow-xl relative h-auto">
         <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none"></div>
         <div class="flex items-center justify-between mb-5">
           <h2 class="text-sm font-semibold tracking-wide text-indigo-400 uppercase flex items-center gap-2">
@@ -60,40 +60,40 @@
           <span class="text-xs text-slate-400">メーターやレシート写真を自動解析</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <button onclick="triggerOcrSim('meter')" class="group flex flex-col items-center justify-center p-6 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center min-h-[120px]">
-            <div class="w-12 h-12 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <button onclick="triggerOcrSim('meter')" class="group flex flex-col items-center justify-center p-6 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center min-h-[140px] h-full">
+            <div class="w-12 h-12 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all shrink-0">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" />
               </svg>
             </div>
-            <span class="text-xs font-bold text-slate-200">メーター画像</span>
-            <span class="text-[10px] text-slate-500 mt-1">TRIP/平均燃費を抽出</span>
+            <span class="text-sm font-bold text-slate-200 block">メーター画像</span>
+            <span class="text-xs text-slate-500 mt-1.5 block">TRIP/平均燃費を抽出</span>
           </button>
 
-          <button onclick="triggerOcrSim('gogogs')" class="group flex flex-col items-center justify-center p-6 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center min-h-[120px]">
-            <div class="w-12 h-12 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all">
+          <button onclick="triggerOcrSim('gogogs')" class="group flex flex-col items-center justify-center p-6 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center min-h-[140px] h-full">
+            <div class="w-12 h-12 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all shrink-0">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <span class="text-xs font-bold text-slate-200">gogo.gsスクショ</span>
-            <span class="text-[10px] text-slate-500 mt-1">東京都ガソリン平均単価</span>
+            <span class="text-sm font-bold text-slate-200 block">gogo.gsスクショ</span>
+            <span class="text-xs text-slate-500 mt-1.5 block">東京都ガソリン平均単価</span>
           </button>
 
-          <button onclick="triggerOcrSim('receipt')" class="group flex flex-col items-center justify-center p-6 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center min-h-[120px]">
-            <div class="w-12 h-12 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all">
+          <button onclick="triggerOcrSim('receipt')" class="group flex flex-col items-center justify-center p-6 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center min-h-[140px] h-full">
+            <div class="w-12 h-12 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all shrink-0">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
-            <span class="text-xs font-bold text-slate-200">レシート・領収書</span>
-            <span class="text-[10px] text-slate-500 mt-1">特定メニュー選別・自動認識</span>
+            <span class="text-sm font-bold text-slate-200 block">レシート・領収書</span>
+            <span class="text-xs text-slate-500 mt-1.5 block">特定メニュー選別・自動認識</span>
           </button>
         </div>
 
-        <div id="ocr-scanner" class="hidden absolute inset-0 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300">
-          <div class="relative w-72 h-40 border border-dashed border-indigo-500/50 rounded-lg flex flex-col items-center justify-center p-4">
+        <div id="ocr-scanner" class="hidden absolute inset-0 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 z-10 rounded-xl">
+          <div class="relative w-80 h-44 border border-dashed border-indigo-500/50 rounded-lg flex flex-col items-center justify-center p-4">
             <div class="absolute left-0 right-0 h-0.5 bg-indigo-500 shadow-lg shadow-indigo-500/50 animate-bounce" style="top: 10%;"></div>
             <svg class="w-8 h-8 text-indigo-400 animate-pulse mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
