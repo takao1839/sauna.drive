@@ -14,7 +14,7 @@
     }
   </style>
 </head>
-<body class="h-full overflow-hidden flex flex-col">
+<body class="min-h-full bg-slate-900 flex flex-col">
 
   <header class="bg-slate-950 border-b border-slate-800 px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center shrink-0 gap-4">
     <div class="flex items-center gap-3">
@@ -43,11 +43,11 @@
     </div>
   </header>
 
-  <main class="flex-1 overflow-hidden flex flex-col lg:flex-row">
+  <main class="flex-1 flex flex-col lg:flex-row lg:overflow-hidden">
     
-    <section class="flex-[2] overflow-y-auto p-6 space-y-6 border-r border-slate-800">
+    <section class="flex-[2] p-6 space-y-6 border-b lg:border-b-0 lg:border-r border-slate-800 lg:overflow-y-auto">
       
-      <div class="bg-gradient-to-br from-slate-900 to-indigo-950/40 border border-slate-800 rounded-xl p-6 shadow-xl relative h-auto">
+      <div class="bg-gradient-to-br from-slate-900 to-indigo-950/40 border border-slate-800 rounded-xl p-6 shadow-xl relative">
         <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none"></div>
         <div class="flex items-center justify-between mb-5">
           <h2 class="text-sm font-semibold tracking-wide text-indigo-400 uppercase flex items-center gap-2">
@@ -60,46 +60,45 @@
           <span class="text-xs text-slate-400">メーターやレシート写真を自動解析</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <button onclick="triggerOcrSim('meter')" class="group flex flex-col items-center justify-center p-6 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center min-h-[140px] h-full">
-            <div class="w-12 h-12 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all shrink-0">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <button onclick="triggerOcrSim('meter')" class="group flex flex-col items-center justify-center p-5 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center py-6">
+            <div class="w-10 h-10 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" />
               </svg>
             </div>
-            <span class="text-sm font-bold text-slate-200 block">メーター画像</span>
-            <span class="text-xs text-slate-500 mt-1.5 block">TRIP/平均燃費を抽出</span>
+            <span class="text-xs font-bold text-slate-200">メーター画像</span>
+            <span class="text-[11px] text-slate-500 mt-1">TRIP/平均燃費を抽出</span>
           </button>
 
-          <button onclick="triggerOcrSim('gogogs')" class="group flex flex-col items-center justify-center p-6 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center min-h-[140px] h-full">
-            <div class="w-12 h-12 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all shrink-0">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <button onclick="triggerOcrSim('gogogs')" class="group flex flex-col items-center justify-center p-5 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center py-6">
+            <div class="w-10 h-10 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <span class="text-sm font-bold text-slate-200 block">gogo.gsスクショ</span>
-            <span class="text-xs text-slate-500 mt-1.5 block">東京都ガソリン平均単価</span>
+            <span class="text-xs font-bold text-slate-200">gogo.gsスクショ</span>
+            <span class="text-[11px] text-slate-500 mt-1">東京都ガソリン平均単価</span>
           </button>
 
-          <button onclick="triggerOcrSim('receipt')" class="group flex flex-col items-center justify-center p-6 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center min-h-[140px] h-full">
-            <div class="w-12 h-12 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all shrink-0">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <button onclick="triggerOcrSim('receipt')" class="group flex flex-col items-center justify-center p-5 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center py-6">
+            <div class="w-10 h-10 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
-            <span class="text-sm font-bold text-slate-200 block">レシート・領収書</span>
-            <span class="text-xs text-slate-500 mt-1.5 block">特定メニュー選別・自動認識</span>
+            <span class="text-xs font-bold text-slate-200">レシート・領収書</span>
+            <span class="text-[11px] text-slate-500 mt-1">特定メニュー選別・自動認識</span>
           </button>
         </div>
 
-        <div id="ocr-scanner" class="hidden absolute inset-0 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 z-10 rounded-xl">
-          <div class="relative w-80 h-44 border border-dashed border-indigo-500/50 rounded-lg flex flex-col items-center justify-center p-4">
+        <div id="ocr-scanner" class="hidden absolute inset-0 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 z-20 rounded-xl">
+          <div class="relative w-72 h-36 border border-dashed border-indigo-500/50 rounded-lg flex flex-col items-center justify-center p-4">
             <div class="absolute left-0 right-0 h-0.5 bg-indigo-500 shadow-lg shadow-indigo-500/50 animate-bounce" style="top: 10%;"></div>
-            <svg class="w-8 h-8 text-indigo-400 animate-pulse mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-indigo-400 animate-pulse mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
             </svg>
             <span class="text-xs text-indigo-300 font-semibold" id="ocr-status">画像をスキャン中...</span>
-            <span class="text-[10px] text-slate-500 mt-1" id="ocr-details">データを抽出しています</span>
           </div>
         </div>
       </div>
@@ -114,7 +113,7 @@
           <div>
             <label class="block text-xs font-medium text-slate-400 mb-1.5">走行距離 (TRIP B)</label>
             <div class="relative rounded-lg shadow-sm">
-              <input type="number" id="input-distance" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="0.0">
+              <input type="number" id="input-distance" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0.0">
               <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <span class="text-xs text-slate-500">km</span>
               </div>
@@ -124,7 +123,7 @@
           <div>
             <label class="block text-xs font-medium text-slate-400 mb-1.5">平均燃費</label>
             <div class="relative rounded-lg shadow-sm">
-              <input type="number" id="input-fuel-economy" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="0.0">
+              <input type="number" id="input-fuel-economy" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0.0">
               <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <span class="text-xs text-slate-500">km/L</span>
               </div>
@@ -134,10 +133,9 @@
           <div>
             <label class="block text-xs font-medium text-slate-400 mb-1.5 flex justify-between items-center">
               <span>ガソリン単価</span>
-              <span class="text-[10px] text-slate-500">gogo.gs参照</span>
             </label>
             <div class="relative rounded-lg shadow-sm">
-              <input type="number" id="input-gas-price" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="0">
+              <input type="number" id="input-gas-price" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0">
               <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <span class="text-xs text-slate-500">円/L</span>
               </div>
@@ -164,21 +162,17 @@
             経費詳細 (高速代・駐車場代・個別メニュー割り勘)
           </h3>
           <button onclick="addNewExpenseRow()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1 rounded-md text-xs font-semibold flex items-center gap-1 transition-colors">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-            経費を追加
+            追加
           </button>
         </div>
-
-        <div id="expense-container" class="space-y-3 max-h-[400px] overflow-y-auto pr-1"></div>
+        <div id="expense-container" class="space-y-3 lg:max-h-[320px] lg:overflow-y-auto pr-1"></div>
       </div>
 
     </section>
 
-    <section class="flex-1 min-w-[360px] lg:max-w-[440px] bg-slate-950 border-t lg:border-t-0 border-slate-800 flex flex-col shrink-0">
+    <section class="flex-1 min-w-[320px] lg:max-w-[440px] bg-slate-950 flex flex-col shrink-0 lg:overflow-y-auto">
       
-      <div class="p-6 border-b border-slate-800 space-y-4 flex-1 overflow-y-auto">
+      <div class="p-6 space-y-4 border-b border-slate-800">
         <h2 class="text-base font-bold text-white tracking-tight flex items-center gap-2">
           <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
@@ -189,7 +183,7 @@
         <div class="space-y-2">
           <div class="flex justify-between items-center">
             <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">メンバー構成</label>
-            <button onclick="addMemberPrompt()" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-0.5">
+            <button onclick="addMemberPrompt()" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold">
               + 追加
             </button>
           </div>
@@ -199,7 +193,7 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">端数処理方法</label>
-            <select id="rounding-method" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+            <select id="rounding-method" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none">
               <option value="round" selected>四捨五入</option>
               <option value="floor">切り捨て</option>
               <option value="ceil">切り上げ</option>
@@ -207,7 +201,7 @@
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">丸め単位</label>
-            <select id="rounding-unit" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+            <select id="rounding-unit" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none">
               <option value="1" selected>1円単位</option>
               <option value="10">10円単位</option>
               <option value="100">100円単位</option>
@@ -230,19 +224,16 @@
             <div id="settlement-route-container" class="space-y-2 text-xs"></div>
           </div>
         </div>
-
       </div>
 
-      <div class="p-6 bg-slate-950 border-t border-slate-800 space-y-3 shrink-0 h-[280px] flex flex-col">
+      <div class="p-6 bg-slate-950 space-y-3 min-h-[260px] flex flex-col">
         <div class="flex justify-between items-center">
-          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-            LINE共有用テキスト
-          </span>
-          <button onclick="copyLineTextToClipboard()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">LINE共有用テキスト</span>
+          <button onclick="copyLineTextToClipboard()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-3 py-1.5 rounded-lg transition-colors">
             コピー
           </button>
         </div>
-        <textarea id="line-output" readonly class="flex-1 w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-300 resize-none focus:outline-none focus:ring-1 focus:ring-slate-700"></textarea>
+        <textarea id="line-output" readonly class="flex-1 min-h-[140px] w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-300 resize-none focus:outline-none"></textarea>
       </div>
 
     </section>
@@ -305,19 +296,16 @@
       document.getElementById('input-gas-price').addEventListener('input', runCalculations);
       document.getElementById('rounding-method').addEventListener('change', runCalculations);
       document.getElementById('rounding-unit').addEventListener('change', runCalculations);
-
       loadPreset('trip_0608');
     });
 
     function loadPreset(key) {
       const preset = PRESETS[key];
       if (!preset) return;
-
       members = [...preset.members];
       document.getElementById('input-distance').value = preset.distance;
       document.getElementById('input-fuel-economy').value = preset.fuelEconomy;
       document.getElementById('input-gas-price').value = preset.gasPrice;
-
       expenses = preset.expenses.map((exp, idx) => ({
         id: 'exp_' + Date.now() + '_' + idx,
         name: exp.name,
@@ -325,7 +313,6 @@
         paidBy: exp.paidBy,
         splitWith: [...exp.splitWith]
       }));
-
       renderMembers();
       renderExpenses();
       runCalculations();
@@ -353,10 +340,7 @@
       members.forEach(m => {
         const tag = document.createElement('div');
         tag.className = 'inline-flex items-center gap-1 px-2.5 py-1 bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 rounded-lg text-xs font-semibold';
-        tag.innerHTML = `
-          <span>${m}</span>
-          <button onclick="removeMember('${m}')" class="text-indigo-400 hover:text-indigo-200 focus:outline-none ml-1">×</button>
-        `;
+        tag.innerHTML = `<span>${m}</span><button onclick="removeMember('${m}')" class="text-indigo-400 hover:text-indigo-200 ml-1">×</button>`;
         container.appendChild(tag);
       });
     }
@@ -393,46 +377,29 @@
     function renderExpenses() {
       const container = document.getElementById('expense-container');
       container.innerHTML = '';
-
       if (expenses.length === 0) {
-        container.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs border border-dashed border-slate-800 rounded-xl">経費はまだ登録されていません。</div>`;
+        container.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs border border-dashed border-slate-800 rounded-xl">経費はまだ登録されていません。</div>`;
         return;
       }
-
       expenses.forEach(exp => {
         const row = document.createElement('div');
-        row.className = 'p-3 bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-xl space-y-2.5 transition-all';
+        row.className = 'p-3 bg-slate-900 border border-slate-800 rounded-xl space-y-2';
         row.innerHTML = `
           <div class="flex items-center gap-2">
-            <input type="text" value="${exp.name}" onchange="updateExpenseField('${exp.id}', 'name', this.value)" class="flex-1 min-w-0 bg-transparent border-b border-slate-700 text-xs text-white font-semibold focus:outline-none py-0.5">
+            <input type="text" value="${exp.name}" onchange="updateExpenseField('${exp.id}', 'name', this.value)" class="flex-1 min-w-0 bg-transparent border-b border-slate-700 text-xs text-white focus:outline-none">
             <div class="relative w-24 shrink-0">
-              <input type="number" value="${exp.amount}" onchange="updateExpenseField('${exp.id}', 'amount', this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-md px-2 py-1 text-xs text-right text-white font-mono focus:outline-none">
-              <span class="absolute right-2 top-1 text-[10px] text-slate-500">円</span>
+              <input type="number" value="${exp.amount}" onchange="updateExpenseField('${exp.id}', 'amount', this.value)" class="w-full bg-slate-950 border border-slate-700 rounded px-2 py-0.5 text-xs text-right text-white font-mono">
             </div>
-            <button onclick="deleteExpenseRow('${exp.id}')" class="text-slate-500 hover:text-rose-400 p-1">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-            </button>
+            <button onclick="deleteExpenseRow('${exp.id}')" class="text-slate-500 hover:text-rose-400">×</button>
           </div>
-          <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800/60 text-[11px]">
-            <div class="flex items-center gap-1 text-slate-400">
-              <span>立替者:</span>
-              <select onchange="updateExpenseField('${exp.id}', 'paidBy', this.value)" class="bg-slate-950 border border-slate-700 rounded px-1.5 py-0.5 text-slate-200 focus:outline-none">
-                ${members.map(m => `<option value="${m}" ${exp.paidBy === m ? 'selected' : ''}>${m}</option>`).join('')}
-              </select>
-            </div>
-            <div class="flex items-center gap-1 text-slate-400">
-              <span>負担対象者:</span>
-              <div class="flex items-center gap-1.5 flex-wrap">
-                ${members.map(m => {
-                  const isChecked = exp.splitWith.includes(m);
-                  return `
-                    <label class="inline-flex items-center gap-0.5 cursor-pointer bg-slate-950 px-1.5 py-0.5 rounded border ${isChecked ? 'border-indigo-500/50 text-indigo-300' : 'border-slate-800 text-slate-500'}">
-                      <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleExpenseSplitter('${exp.id}', '${m}', this.checked)" class="hidden">
-                      <span>${m}</span>
-                    </label>
-                  `;
-                }).join('')}
-              </div>
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-1.5 border-t border-slate-800/60 text-[11px]">
+            <div>立替: <select onchange="updateExpenseField('${exp.id}', 'paidBy', this.value)" class="bg-slate-950 border border-slate-700 rounded px-1">${members.map(m => `<option value="${m}" ${exp.paidBy === m ? 'selected' : ''}>${m}</option>`).join('')}</select></div>
+            <div class="flex items-center gap-1">
+              <span>対象:</span>
+              ${members.map(m => {
+                const isChecked = exp.splitWith.includes(m);
+                return `<label class="px-1.5 py-0.5 rounded border text-[10px] ${isChecked ? 'border-indigo-500 text-indigo-300' : 'border-slate-800 text-slate-500'}"><input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleExpenseSplitter('${exp.id}', '${m}', this.checked)" class="hidden"><span>${m}</span></label>`;
+              }).join('')}
             </div>
           </div>
         `;
@@ -455,22 +422,16 @@
     function updateExpenseField(id, field, value) {
       const idx = expenses.findIndex(exp => exp.id === id);
       if (idx === -1) return;
-      if (field === 'amount') {
-        expenses[idx].amount = Math.max(0, parseInt(value) || 0);
-      } else {
-        expenses[idx][field] = value;
-      }
+      if (field === 'amount') expenses[idx].amount = Math.max(0, parseInt(value) || 0);
+      else expenses[idx][field] = value;
       runCalculations();
     }
 
     function toggleExpenseSplitter(id, member, isChecked) {
       const idx = expenses.findIndex(exp => exp.id === id);
       if (idx === -1) return;
-      if (isChecked) {
-        if (!expenses[idx].splitWith.includes(member)) expenses[idx].splitWith.push(member);
-      } else {
-        expenses[idx].splitWith = expenses[idx].splitWith.filter(m => m !== member);
-      }
+      if (isChecked) { if (!expenses[idx].splitWith.includes(member)) expenses[idx].splitWith.push(member); }
+      else { expenses[idx].splitWith = expenses[idx].splitWith.filter(m => m !== member); }
       renderExpenses();
       runCalculations();
     }
@@ -529,49 +490,38 @@
 
       const netBalances = {};
       members.forEach(m => { netBalances[m] = paidAmounts[m] - shareAmounts[m]; });
-
       const transactions = calculateOptimizedCashflow(netBalances, applyRounding);
 
       const routeContainer = document.getElementById('settlement-route-container');
       routeContainer.innerHTML = '';
       if (transactions.length === 0) {
-        routeContainer.innerHTML = `<div class="text-center py-4 text-slate-500 font-mono text-xs">差額精算なし。全員均衡しています。</div>`;
+        routeContainer.innerHTML = `<div class="text-center py-3 text-slate-500 font-mono text-xs">差額精算なし。全員均衡しています。</div>`;
       } else {
         transactions.forEach(t => {
           const row = document.createElement('div');
-          row.className = 'flex items-center justify-between p-2.5 bg-slate-950 rounded-lg border border-slate-800 font-mono text-xs';
-          row.innerHTML = `<div><span class="text-rose-400 font-bold">${t.from}</span> ➔ <span class="text-emerald-400 font-bold">${t.to}</span></div><span class="text-indigo-400 font-extrabold">${t.amount.toLocaleString()}円</span>`;
+          row.className = 'flex items-center justify-between p-2 bg-slate-950 rounded border border-slate-800 font-mono text-xs';
+          row.innerHTML = `<div><span class="text-rose-400 font-bold">${t.from}</span> ➔ <span class="text-emerald-400 font-bold">${t.to}</span></div><span class="text-indigo-400 font-bold">${t.amount.toLocaleString()}円</span>`;
           routeContainer.appendChild(row);
         });
       }
-
       generateLineText(gasCost, otherExpensesTotal, grandTotal, perCapitaBase, transactions, distance, fuelEconomy, gasPrice);
     }
 
     function calculateOptimizedCashflow(balances, roundFunc) {
-      let debtors = [];
-      let creditors = [];
+      let debtors = []; let creditors = [];
       for (let m in balances) {
         if (balances[m] < -0.1) debtors.push({ name: m, amount: -balances[m] });
         else if (balances[m] > 0.1) creditors.push({ name: m, amount: balances[m] });
       }
-      debtors.sort((a, b) => b.amount - a.amount);
-      creditors.sort((a, b) => b.amount - a.amount);
-
-      let transactions = [];
-      let i = 0, j = 0;
+      debtors.sort((a, b) => b.amount - a.amount); creditors.sort((a, b) => b.amount - a.amount);
+      let transactions = []; let i = 0, j = 0;
       while (i < debtors.length && j < creditors.length) {
-        let debtor = debtors[i];
-        let creditor = creditors[j];
+        let debtor = debtors[i]; let creditor = creditors[j];
         let amount = Math.min(debtor.amount, creditor.amount);
         let finalAmount = roundFunc(amount);
         if (finalAmount <= 0 && amount > 0) finalAmount = Math.round(amount);
-
-        if (finalAmount > 0) {
-          transactions.push({ from: debtor.name, to: creditor.name, amount: finalAmount });
-        }
-        debtor.amount -= amount;
-        creditor.amount -= amount;
+        if (finalAmount > 0) transactions.push({ from: debtor.name, to: creditor.name, amount: finalAmount });
+        debtor.amount -= amount; creditor.amount -= amount;
         if (debtor.amount < 0.1) i++;
         if (creditor.amount < 0.1) j++;
       }
@@ -581,25 +531,17 @@
     function generateLineText(gasCost, other, grandTotal, perCapita, transactions, dist, economy, gasPrice) {
       let text = `【ドライブ精算詳細】\n\n■経費合計：${grandTotal.toLocaleString()}円\n`;
       if (gasCost > 0) text += `・ガソリン代：${gasCost.toLocaleString()}円 (${dist}km ÷ ${economy}km/L × ${gasPrice}円)\n`;
-      
-      expenses.filter(e => e.amount > 0).forEach(exp => {
-        text += `・${exp.name}：${exp.amount.toLocaleString()}円 (立替: ${exp.paidBy})\n`;
-      });
-
+      expenses.filter(e => e.amount > 0).forEach(exp => { text += `・${exp.name}：${exp.amount.toLocaleString()}円 (立替: ${exp.paidBy})\n`; });
       text += `\n■1人あたりの負担額 (${members.length}名)：${perCapita.toLocaleString()}円\n\n■各自の精算アクション\n`;
-      if (transactions.length > 0) {
-        transactions.forEach(t => { text += `・${t.from} ➔ ${t.to}へ支払い：${t.amount.toLocaleString()}円\n`; });
-      } else {
-        text += `・差額の精算はありません。\n`;
-      }
+      if (transactions.length > 0) { transactions.forEach(t => { text += `・${t.from} ➔ ${t.to}へ支払い：${t.amount.toLocaleString()}円\n`; }); }
+      else { text += `・差額の精算はありません。\n`; }
       const method = document.getElementById('rounding-method').value === 'floor' ? '切り捨て' : document.getElementById('rounding-method').value === 'ceil' ? '切り上げ' : '四捨五入';
       text += `\n※各端数は${document.getElementById('rounding-unit').value}円単位で${method}計算しています。`;
       document.getElementById('line-output').value = text;
     }
 
     function copyLineTextToClipboard() {
-      const output = document.getElementById('line-output');
-      output.select();
+      const output = document.getElementById('line-output'); output.select();
       navigator.clipboard.writeText(output.value);
       alert('LINE共有用テキストをクリップボードにコピーしました！');
     }
@@ -607,41 +549,26 @@
     function triggerOcrSim(type) {
       const overlay = document.getElementById('ocr-scanner');
       const statusText = document.getElementById('ocr-status');
-      const detailsText = document.getElementById('ocr-details');
       overlay.classList.remove('hidden');
-
       if (type === 'meter') {
         statusText.textContent = '車載メーターを解析中...';
-        detailsText.textContent = 'TRIP B 距離、平均燃費情報をAIが読み取っています。';
         setTimeout(() => {
           document.getElementById('input-distance').value = 74.4;
           document.getElementById('input-fuel-economy').value = 11.3;
-          overlay.classList.add('hidden');
-          runCalculations();
-        }, 1500);
+          overlay.classList.add('hidden'); runCalculations();
+        }, 1200);
       } else if (type === 'gogogs') {
         statusText.textContent = 'gogo.gs スクショ解析中...';
-        detailsText.textContent = '東京都レギュラーガソリン平均単価データを同期中。';
         setTimeout(() => {
           document.getElementById('input-gas-price').value = 163.1;
-          overlay.classList.add('hidden');
-          runCalculations();
-        }, 1500);
+          overlay.classList.add('hidden'); runCalculations();
+        }, 1200);
       } else if (type === 'receipt') {
         statusText.textContent = 'レシートをOCR読み取り中...';
-        detailsText.textContent = '項目から特定メニュー、金額を抽出しています。';
         setTimeout(() => {
-          expenses.push({
-            id: 'exp_' + Date.now(),
-            name: '中華大新 特製餃子(割り勘対象)',
-            amount: 1000,
-            paidBy: '岩崎',
-            splitWith: [...members]
-          });
-          renderExpenses();
-          overlay.classList.add('hidden');
-          runCalculations();
-        }, 1500);
+          expenses.push({ id: 'exp_' + Date.now(), name: '中華大新 特製餃子(割り勘対象)', amount: 1000, paidBy: '岩崎', splitWith: [...members] });
+          renderExpenses(); overlay.classList.add('hidden'); runCalculations();
+        }, 1200);
       }
     }
   </script>
