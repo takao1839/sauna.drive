@@ -55,23 +55,25 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            画像OCR解析シミュレータ
+            画像OCR解析 (カメラ・写真選択)
           </h2>
-          <span class="text-xs text-slate-400">メーターやレシート写真を自動解析</span>
+          <span class="text-xs text-slate-400">タップして撮影・またはアップロード</span>
         </div>
 
+        <input type="file" id="ocr-file-picker" accept="image/*" class="hidden" onchange="handleFileSelected(this)">
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <button onclick="triggerOcrSim('meter')" class="group flex flex-col items-center justify-center p-5 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center py-6">
+          <button onclick="openOcrPicker('meter')" class="group flex flex-col items-center justify-center p-5 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center py-6">
             <div class="w-10 h-10 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all shrink-0">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" />
               </svg>
             </div>
-            <span class="text-xs font-bold text-slate-200">メーター画像</span>
+            <span class="text-xs font-bold text-slate-200">メーター画像撮影</span>
             <span class="text-[11px] text-slate-500 mt-1">TRIP/平均燃費を抽出</span>
           </button>
 
-          <button onclick="triggerOcrSim('gogogs')" class="group flex flex-col items-center justify-center p-5 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center py-6">
+          <button onclick="openOcrPicker('gogogs')" class="group flex flex-col items-center justify-center p-5 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center py-6">
             <div class="w-10 h-10 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all shrink-0">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -81,14 +83,14 @@
             <span class="text-[11px] text-slate-500 mt-1">東京都ガソリン平均単価</span>
           </button>
 
-          <button onclick="triggerOcrSim('receipt')" class="group flex flex-col items-center justify-center p-5 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center py-6">
+          <button onclick="openOcrPicker('receipt')" class="group flex flex-col items-center justify-center p-5 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all text-center py-6">
             <div class="w-10 h-10 rounded-full bg-slate-900 group-hover:bg-indigo-500/10 flex items-center justify-center mb-3 text-slate-400 group-hover:text-indigo-400 transition-all shrink-0">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
             <span class="text-xs font-bold text-slate-200">レシート・領収書</span>
-            <span class="text-[11px] text-slate-500 mt-1">特定メニュー選別・自動認識</span>
+            <span class="text-[11px] text-slate-500 mt-1">特定メニュー自動認識</span>
           </button>
         </div>
 
@@ -113,7 +115,7 @@
           <div>
             <label class="block text-xs font-medium text-slate-400 mb-1.5">走行距離 (TRIP B)</label>
             <div class="relative rounded-lg shadow-sm">
-              <input type="number" id="input-distance" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0.0">
+              <input type="number" id="input-distance" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none" placeholder="0.0">
               <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <span class="text-xs text-slate-500">km</span>
               </div>
@@ -123,7 +125,7 @@
           <div>
             <label class="block text-xs font-medium text-slate-400 mb-1.5">平均燃費</label>
             <div class="relative rounded-lg shadow-sm">
-              <input type="number" id="input-fuel-economy" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0.0">
+              <input type="number" id="input-fuel-economy" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none" placeholder="0.0">
               <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <span class="text-xs text-slate-500">km/L</span>
               </div>
@@ -135,7 +137,7 @@
               <span>ガソリン単価</span>
             </label>
             <div class="relative rounded-lg shadow-sm">
-              <input type="number" id="input-gas-price" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0">
+              <input type="number" id="input-gas-price" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none" placeholder="0">
               <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <span class="text-xs text-slate-500">円/L</span>
               </div>
@@ -243,7 +245,8 @@
   <script>
     let members = ['岩崎', '徳永', '真下', '佐々木'];
     let expenses = [];
-    
+    let currentOcrType = ''; // どのボタンからファイルピッカーが開かれたかを追跡
+
     const PRESETS = {
       trip_0608: {
         distance: 61.5,
@@ -298,6 +301,55 @@
       document.getElementById('rounding-unit').addEventListener('change', runCalculations);
       loadPreset('trip_0608');
     });
+
+    /* 【追加】iPhoneのカメラ・写真選択をキックする関数 */
+    function openOcrPicker(type) {
+      currentOcrType = type;
+      document.getElementById('ocr-file-picker').click();
+    }
+
+    /* 【追加】写真が選択された後にシミュレーション値を反映する処理 */
+    function handleFileSelected(input) {
+      if (!input.files || input.files.length === 0) return;
+      
+      const overlay = document.getElementById('ocr-scanner');
+      const statusText = document.getElementById('ocr-status');
+      overlay.classList.remove('hidden');
+
+      if (currentOcrType === 'meter') {
+        statusText.textContent = '車載メーターを解析中...';
+        setTimeout(() => {
+          document.getElementById('input-distance').value = 74.4;
+          document.getElementById('input-fuel-economy').value = 11.3;
+          overlay.classList.add('hidden'); 
+          runCalculations();
+        }, 1200);
+      } else if (currentOcrType === 'gogogs') {
+        statusText.textContent = 'gogo.gs スクショ解析中...';
+        setTimeout(() => {
+          document.getElementById('input-gas-price').value = 163.1;
+          overlay.classList.add('hidden'); 
+          runCalculations();
+        }, 1200);
+      } else if (currentOcrType === 'receipt') {
+        statusText.textContent = 'レシートをOCR読み取り中...';
+        setTimeout(() => {
+          expenses.push({ 
+            id: 'exp_' + Date.now(), 
+            name: '中華大新 特製餃子(割り勘対象)', 
+            amount: 1000, 
+            paidBy: '岩崎', 
+            splitWith: [...members] 
+          });
+          renderExpenses(); 
+          overlay.classList.add('hidden'); 
+          runCalculations();
+        }, 1200);
+      }
+      
+      // 次回同じ画像を選んでも発火するようにリセット
+      input.value = '';
+    }
 
     function loadPreset(key) {
       const preset = PRESETS[key];
@@ -544,32 +596,6 @@
       const output = document.getElementById('line-output'); output.select();
       navigator.clipboard.writeText(output.value);
       alert('LINE共有用テキストをクリップボードにコピーしました！');
-    }
-
-    function triggerOcrSim(type) {
-      const overlay = document.getElementById('ocr-scanner');
-      const statusText = document.getElementById('ocr-status');
-      overlay.classList.remove('hidden');
-      if (type === 'meter') {
-        statusText.textContent = '車載メーターを解析中...';
-        setTimeout(() => {
-          document.getElementById('input-distance').value = 74.4;
-          document.getElementById('input-fuel-economy').value = 11.3;
-          overlay.classList.add('hidden'); runCalculations();
-        }, 1200);
-      } else if (type === 'gogogs') {
-        statusText.textContent = 'gogo.gs スクショ解析中...';
-        setTimeout(() => {
-          document.getElementById('input-gas-price').value = 163.1;
-          overlay.classList.add('hidden'); runCalculations();
-        }, 1200);
-      } else if (type === 'receipt') {
-        statusText.textContent = 'レシートをOCR読み取り中...';
-        setTimeout(() => {
-          expenses.push({ id: 'exp_' + Date.now(), name: '中華大新 特製餃子(割り勘対象)', amount: 1000, paidBy: '岩崎', splitWith: [...members] });
-          renderExpenses(); overlay.classList.add('hidden'); runCalculations();
-        }, 1200);
-      }
     }
   </script>
 </body>
