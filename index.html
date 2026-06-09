@@ -10,21 +10,15 @@
 </head>
 <body class="min-h-full bg-slate-900 flex flex-col">
 
-  <header class="bg-slate-950 border-b border-slate-800 px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center shrink-0 gap-4">
+  <header class="bg-slate-950 border-b border-slate-800 px-6 py-4 flex flex-col sm:flex-row justify-between items-center shrink-0 gap-4">
     <div class="flex items-center gap-3">
-      <div class="p-2 bg-indigo-600 rounded-lg shadow-lg shadow-indigo-500/20">
-        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
-      </div>
-      <div>
-        <h1 class="text-xl font-bold tracking-tight text-white">ドライブ精算マネージャー</h1>
-        <p class="text-xs text-slate-400">OCR & キャッシュフロー最適化</p>
-      </div>
+      <h1 class="text-xl font-bold text-white">ドライブ精算マネージャー</h1>
     </div>
     <div class="flex items-center gap-2 w-full sm:w-auto">
       <select id="preset-selector" class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white">
-        <option value="">履歴を選択...</option>
+        <option value="">履歴から選択...</option>
       </select>
-      <button onclick="saveCurrentAsHistory()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded-lg text-xs font-bold">保存</button>
+      <button onclick="saveCurrentAsHistory()" class="bg-indigo-600 hover:bg-indigo-700 px-4 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap">保存</button>
     </div>
   </header>
 
@@ -33,15 +27,15 @@
       <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 relative">
         <input type="file" id="ocr-file-picker" accept="image/*" class="hidden" onchange="handleFileSelected(this)">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <button onclick="openOcrPicker('meter')" class="p-4 bg-slate-900 border border-slate-700 rounded-xl hover:border-indigo-500 transition-all text-center text-xs">メーター撮影</button>
-          <button onclick="openOcrPicker('gogogs')" class="p-4 bg-slate-900 border border-slate-700 rounded-xl hover:border-indigo-500 transition-all text-center text-xs">価格撮影</button>
-          <button onclick="openOcrPicker('receipt')" class="p-4 bg-slate-900 border border-slate-700 rounded-xl hover:border-indigo-500 transition-all text-center text-xs">レシート読み取り</button>
+          <button onclick="openOcrPicker('meter')" class="p-4 bg-slate-900 border border-slate-700 rounded-xl hover:border-indigo-500 transition-all text-xs">メーター撮影</button>
+          <button onclick="openOcrPicker('gogogs')" class="p-4 bg-slate-900 border border-slate-700 rounded-xl hover:border-indigo-500 transition-all text-xs">価格撮影</button>
+          <button onclick="openOcrPicker('receipt')" class="p-4 bg-slate-900 border border-slate-700 rounded-xl hover:border-indigo-500 transition-all text-xs">レシート読込</button>
         </div>
-        <div id="ocr-scanner" class="hidden absolute inset-0 bg-slate-950/90 flex items-center justify-center rounded-xl"><span class="text-indigo-400 animate-pulse">解析中...</span></div>
+        <div id="ocr-scanner" class="hidden absolute inset-0 bg-slate-950/90 flex items-center justify-center z-20 rounded-xl"><span class="text-indigo-400 animate-pulse">解析中...</span></div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <input type="number" id="input-distance" placeholder="走行距離(km)" class="bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white" oninput="runCalculations()">
+        <input type="number" id="input-distance" placeholder="距離(km)" class="bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white" oninput="runCalculations()">
         <input type="number" id="input-fuel-economy" placeholder="燃費(km/L)" class="bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white" oninput="runCalculations()">
         <input type="number" id="input-gas-price" placeholder="単価(円/L)" class="bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white" oninput="runCalculations()">
       </div>
@@ -57,38 +51,33 @@
   </main>
 
   <script>
+    // 状態管理
     let members = ['岩崎', '徳永', '真下', '佐々木'];
     let expenses = [];
     let currentOcrType = '';
 
-    function openOcrPicker(type) { currentOcrType = type; document.getElementById('ocr-file-picker').click(); }
-
-    function handleFileSelected(input) {
-      if (!input.files || input.files.length === 0) return;
-      document.getElementById('ocr-scanner').classList.remove('hidden');
-      setTimeout(() => {
-        if (currentOcrType === 'meter') { document.getElementById('input-distance').value = 74.4; document.getElementById('input-fuel-economy').value = 11.3; }
-        else if (currentOcrType === 'gogogs') { document.getElementById('input-gas-price').value = 163.1; }
-        else { expenses.push({ id: Date.now(), name: 'レシート読込分', amount: 1000, paidBy: members[0], splitWith: [...members] }); renderExpenses(); }
-        document.getElementById('ocr-scanner').classList.add('hidden');
-        runCalculations();
-      }, 1000);
-    }
-
+    // 【新機能】履歴保存・呼び出し
     function saveCurrentAsHistory() {
-      const name = prompt('履歴名を入力:', 'ドライブ_' + new Date().toLocaleDateString());
+      const name = prompt('この旅に名前をつけて保存:', 'ドライブ_' + new Date().toLocaleDateString());
       if (!name) return;
-      const data = { name, distance: document.getElementById('input-distance').value, fuelEconomy: document.getElementById('input-fuel-economy').value, gasPrice: document.getElementById('input-gas-price').value, members, expenses };
       const history = JSON.parse(localStorage.getItem('my_drive_history') || '[]');
-      history.push(data);
+      history.push({
+        name,
+        distance: document.getElementById('input-distance').value,
+        fuelEconomy: document.getElementById('input-fuel-economy').value,
+        gasPrice: document.getElementById('input-gas-price').value,
+        members,
+        expenses
+      });
       localStorage.setItem('my_drive_history', JSON.stringify(history));
       updateHistoryDropdown();
+      alert('保存しました！');
     }
 
     function updateHistoryDropdown() {
       const selector = document.getElementById('preset-selector');
       const history = JSON.parse(localStorage.getItem('my_drive_history') || '[]');
-      selector.innerHTML = '<option value="">履歴を選択...</option>';
+      selector.innerHTML = '<option value="">履歴から選択...</option>';
       history.forEach((h, i) => { selector.innerHTML += `<option value="${i}">${h.name}</option>`; });
     }
 
@@ -103,21 +92,38 @@
       renderMembers(); renderExpenses(); runCalculations();
     });
 
+    // --- 既存機能の再統合 ---
+    function openOcrPicker(type) { currentOcrType = type; document.getElementById('ocr-file-picker').click(); }
+
+    function handleFileSelected(input) {
+      if (!input.files || input.files.length === 0) return;
+      document.getElementById('ocr-scanner').classList.remove('hidden');
+      setTimeout(() => {
+        if (currentOcrType === 'meter') { document.getElementById('input-distance').value = 74.4; document.getElementById('input-fuel-economy').value = 11.3; }
+        else if (currentOcrType === 'gogogs') { document.getElementById('input-gas-price').value = 163.1; }
+        else { expenses.push({ id: Date.now(), name: 'レシート読込分', amount: 1000, paidBy: members[0], splitWith: [...members] }); renderExpenses(); }
+        document.getElementById('ocr-scanner').classList.add('hidden');
+        runCalculations();
+      }, 1000);
+      input.value = '';
+    }
+
     function renderMembers() {
-      const container = document.getElementById('member-tag-container');
-      container.innerHTML = members.map(m => `<span class="px-2 py-1 bg-indigo-900/50 rounded-lg text-xs text-indigo-300 border border-indigo-500/20">${m}</span>`).join('');
+      document.getElementById('member-tag-container').innerHTML = members.map(m => `<span class="px-2 py-1 bg-indigo-900/50 rounded-lg text-xs text-indigo-300 border border-indigo-500/20">${m}</span>`).join('');
     }
 
     function renderExpenses() {
       const container = document.getElementById('expense-container');
       container.innerHTML = expenses.map(e => `
-        <div class="flex gap-2 bg-slate-900 p-2 rounded text-xs">
-          <input value="${e.name}" class="bg-transparent w-full text-white">
+        <div class="flex gap-2 bg-slate-900 p-2 rounded text-xs items-center">
+          <input value="${e.name}" class="bg-transparent text-white w-full">
           <input type="number" value="${e.amount}" class="bg-slate-950 w-20 text-right" onchange="runCalculations()">
+          <button onclick="deleteExpenseRow(${e.id})" class="text-slate-500">×</button>
         </div>`).join('');
     }
 
     function addNewExpenseRow() { expenses.push({ id: Date.now(), name: '新規経費', amount: 0, paidBy: members[0], splitWith: [...members] }); renderExpenses(); }
+    function deleteExpenseRow(id) { expenses = expenses.filter(e => e.id !== id); renderExpenses(); runCalculations(); }
 
     function runCalculations() {
       const d = parseFloat(document.getElementById('input-distance').value) || 0;
@@ -125,10 +131,9 @@
       const p = parseFloat(document.getElementById('input-gas-price').value) || 0;
       const gasTotal = Math.round((d / f) * p) || 0;
       const grandTotal = gasTotal + expenses.reduce((a, b) => a + b.amount, 0);
-      document.getElementById('line-output').value = `合計: ${grandTotal.toLocaleString()}円\n詳細な清算データ...`;
+      document.getElementById('line-output').value = `【ドライブ精算】\n合計: ${grandTotal.toLocaleString()}円\n経費・ガソリン代計算済み。`;
     }
 
-    // 初期化
     updateHistoryDropdown();
     renderMembers();
   </script>
