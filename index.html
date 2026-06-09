@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja" class="h-full bg-slate-900 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ドライブ割り勘＆精算管理 App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="h-full overflow-hidden flex flex-col">
+  <header class="bg-slate-950 p-4 border-b border-slate-800">
+    <h1 class="text-lg font-bold">ドライブ精算マネージャー</h1>
+  </header>
+
+  <main class="flex-1 overflow-auto p-4">
+    <section class="mb-6 bg-slate-900 p-4 rounded-xl border border-slate-700">
+      <div class="grid grid-cols-3 gap-4">
+        <input type="number" id="input-distance" placeholder="距離(km)" class="bg-slate-800 p-2 rounded">
+        <input type="number" id="input-fuel-economy" placeholder="燃費(km/L)" class="bg-slate-800 p-2 rounded">
+        <input type="number" id="input-gas-price" placeholder="単価(円/L)" class="bg-slate-800 p-2 rounded">
+      </div>
+      <div class="mt-4 text-emerald-400">ガソリン代計算: <span id="gas-calc-total">0</span>円</div>
+    </section>
+
+    <div id="member-tag-container" class="mb-4 flex flex-wrap gap-2"></div>
+    <div id="expense-container" class="space-y-4"></div>
+    <button onclick="addNewExpenseRow()" class="mt-4 bg-indigo-600 px-4 py-2 rounded">経費を追加</button>
+
+    <div class="mt-8 p-4 bg-slate-800 rounded">
+      <div id="calc-grand-total">合計: 0円</div>
+      <div id="calc-per-capita">1人あたり: 0円</div>
+      <div id="settlement-route-container" class="mt-4"></div>
+      <textarea id="line-output" class="w-full mt-4 h-32 bg-black p-2 text-xs text-green-400"></textarea>
+      <button onclick="copyLineTextToClipboard()" class="mt-2 bg-emerald-600 px-4 py-2 rounded">結果をコピー</button>
+    </div>
+  </main>
+
+  <script>
+    // --- JavaScriptのロジックはここに全て統合されます ---
+    let members = ['岩崎', '徳永', '真下', '佐々木'];
+    let expenses = [];
+
+    // 計算実行関数
+    function runCalculations() {
+      const dist = parseFloat(document.getElementById('input-distance').value) || 0;
+      const econ = parseFloat(document.getElementById('input-fuel-economy').value) || 0;
+      const price = parseFloat(document.getElementById('input-gas-price').value) || 0;
+      const gasCost = Math.round((dist / econ) * price) || 0;
+      
+      document.getElementById('gas-calc-total').textContent = gasCost.toLocaleString();
+
+      const paid = {}, share = {};
+      members.forEach(m => { paid[m] = 0; share[m] = 0; });
+
+      if (gasCost > 0) {
+        paid[members[0]] = (paid[members[0]] || 0) + gasCost;
+        members.forEach(m => share[m] += gasCost / members.length);
+      }
+      
+      expenses.forEach(e => {
+        paid[e.paidBy] = (paid[e.paidBy] || 0) + e.amount;
+        e.splitWith.forEach(m => share[m] += e.amount / e.splitWith.length);
+      });
+
+      const total = gasCost + expenses.reduce((a, b) => a + b.amount, 0);
+      document.getElementById('calc-grand-total').textContent = '合計: ' + total.toLocaleString() + '円';
+      document.getElementById('calc-per-capita').textContent = '1人あたり: ' + Math.round(total / members.length).toLocaleString() + '円';
+
+      const balances = {};
+      members.forEach(m => balances[m] = paid[m] - share[m]);
+      
+      const transactions = calculateOptimizedCashflow(balances);
+      const container = document.getElementById('settlement-route-container');
+      container.innerHTML = transactions.map(t => `<div class="p-2 border-b border-slate-700">${t.from} → ${t.to}: ${t.amount}円</div>`).join('');
+      
+      generateLineText(total, transactions);
+    }
+
+    function calculateOptimizedCashflow(balances) {
+      let debtors = Object.keys(balances).filter(m => balances[m] < 0).map(m => ({name: m, amt: -balances[m]}));
+      let creditors = Object.keys(balances).filter(m => balances[m] > 0).map(m => ({name: m, amt: balances[m]}));
+      let res = [];
+      let i = 0, j = 0;
+      while(i < debtors.length && j < creditors.length) {
+        let amt = Math.min(debtors[i].amt, creditors[j].amt);
+        res.push({from: debtors[i].name, to: creditors[j].name, amount: Math.round(amt)});
+        debtors[i].amt -= amt; creditors[j].amt -= amt;
+        if (debtors[i].amt < 1) i++;
+        if (creditors[j].amt < 1) j++;
+      }
+      return res;
+    }
+
+    function generateLineText(total, trans) {
+      let text = `【精算まとめ】\n合計: ${total.toLocaleString()}円\n`;
+      trans.forEach(t => text += `${t.from} → ${t.to}: ${t.amount}円\n`);
+      document.getElementById('line-output').value = text;
+    }
+
+    function addNewExpenseRow() {
+      expenses.push({ id: 'e' + Date.now(), name: '経費', amount: 0, paidBy: members[0], splitWith: [...members] });
+      runCalculations();
+    }
+
+    function copyLineTextToClipboard() {
+      navigator.clipboard.writeText(document.getElementById('line-output').value);
+      alert('コピーしました');
+    }
+
+    // 初期起動イベント
+    ['input-distance', 'input-fuel-economy', 'input-gas-price'].forEach(id => {
+      document.getElementById(id).addEventListener('input', runCalculations);
+    });
+  </script>
+</body>
+</html>
